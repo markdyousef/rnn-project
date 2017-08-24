@@ -3,6 +3,7 @@ from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import LSTM
 import keras
+import string
 
 
 # fill out the function below that transforms the input series
@@ -36,9 +37,15 @@ def build_part1_RNN(window_size):
 ### return the text input with only ascii lowercase and the punctuation given below included.
 def cleaned_text(text):
     punctuation = ['!', ',', '.', ':', ';', '?']
-    vocab = sorted(set(list(text)))
-    print(vocab)
-    return text
+    white_list = list(string.ascii_lowercase) + punctuation
+    text_clean = []
+    for c in list(text):
+        if c in white_list:
+            text_clean.append(c)
+        else:
+            text_clean.append(' ')
+    text_clean = ''.join(text_clean)
+    return text_clean
 
 
 ### fill out the function below that transforms the input text and window-size into a set of input/output pairs for use with our RNN model
